@@ -20,6 +20,9 @@ nav a{
   color: #efefef;
   text-decoration: none;
 }
+nav a:hover {
+  color: #fff;
+}
 
 #categoryNav {
   display: flex;

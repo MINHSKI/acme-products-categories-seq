@@ -25,14 +25,14 @@ app.delete('/categories/:id', (req, res, next)=> {
   .then(()=> res.redirect('/'))
   .catch(next);
 });
+
 app.delete('/products/:id', (req, res, next)=> {
-  let product;
   Product.findByIdAndDestroy(req.params.id) 
     .then((product)=> {
       if(product.category){
-        return res.redirect(`/categories/${product.category.name}`)
+        return res.redirect(`/categories/${product.category.name}`);
       }
-      res.redirect('/products')
+      res.redirect('/products');
     })
     .catch(next);
 });
@@ -40,7 +40,7 @@ app.delete('/products/:id', (req, res, next)=> {
 app.get('/categories/:name', (req, res, next)=> {
   Category.findOneByNameOrThrow(req.params.name)
     .then( category => {
-    res.render('category', { category });
+      res.render('category', { category });
   })
   .catch(next);
 });

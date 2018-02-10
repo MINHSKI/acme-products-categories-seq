@@ -18,7 +18,7 @@ Category.findOneByNameOrThrow = function(name){
   })
   .then( category => {
     if(!category){
-      throw { status: 404, message: 'product not found'};
+      throw { status: 404, message: 'category not found'};
     }
     return category;
   });

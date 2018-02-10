@@ -15,7 +15,7 @@
       {% for category in categories %}
         <div>
           <a href='/categories/{{category.name}}'>
-            {{ category.name }}
+            {{ category.name }} <span class='badge badge-success'>{{ category.products.length }}</span>
           </a>
         </div>
       {% endfor %}
