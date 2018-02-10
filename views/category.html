@@ -1,0 +1,16 @@
+{% extends './layout.html' %}
+{% block content %}
+  <h1>{{ category.name }}</h1>
+  <div id='productList'>
+    {% for product in category.products %}
+      <div>
+        <div>
+          {% include './_deleteButton.html' %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  <form method='POST' action='/categories/{{category.id}}?_method=DELETE'>
+    <button class='btn btn-danger'>Delete Category</button>
+  </form>
+{% endblock %}

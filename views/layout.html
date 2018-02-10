@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <link rel='stylesheet' href='/vendor/bootstrap/dist/css/bootstrap.css' />
+    <link rel='stylesheet' href='/public/styles.css' />
+  </head>
+  <body>
+    <nav>
+      <div id='home'>
+        <a href='/'>Home</a>
+      </div>
+      <div id='categoryNav'>
+      <div>
+        <a href='/products'>All Products</a>
+      </div>
+      {% for category in categories %}
+        <div>
+          <a href='/categories/{{category.name}}'>
+            {{ category.name }}
+          </a>
+        </div>
+      {% endfor %}
+      </div>
+    </nav>
+    <form method='POST' action='/products' id='productForm'>
+      <div>
+        <label>Category Name</label>
+        <input name='categoryName' {% if category%}value='{{ category.name}}'{% endif %}/>
+      </div>
+      <div>
+        <label>Product Name:</label>
+        <input name='productName' />
+      </div>
+      <div>
+        <button class='btn btn-primary btn-block'>Create Product</button>
+      </div>
+    </form>
+    {% block content %}
+    {% endblock %}
+  </body>
+</html>
