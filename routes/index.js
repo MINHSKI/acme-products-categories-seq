@@ -5,9 +5,7 @@ const { Product, Category } = db.models;
 module.exports = app;
 
 app.get('/products', (req, res, next)=> {
-  Product.findAll(
-    { include: [ Category ]}
-  )
+  Product.findAllWithCategories()
   .then( products => res.render('products', { products }))
   .catch(next);
 });
@@ -29,14 +27,8 @@ app.delete('/categories/:id', (req, res, next)=> {
 });
 app.delete('/products/:id', (req, res, next)=> {
   let product;
-  Product.findById(req.params.id, {
-    include: [ Category ]
-  })
-    .then( _product => {
-      product = _product;
-      return product.destroy();
-    })
-    .then(()=> {
+  Product.findByIdAndDestroy(req.params.id) 
+    .then((product)=> {
       if(product.category){
         return res.redirect(`/categories/${product.category.name}`)
       }
@@ -46,18 +38,13 @@ app.delete('/products/:id', (req, res, next)=> {
 });
 
 app.get('/categories/:name', (req, res, next)=> {
-  Category.findOne({
-    where: { name: req.params.name },
-    include: [ Product ]
-  })
-  .then( category => {
-    if(!category){
-      throw { status: 404, message: 'product not found'};
-    }
+  Category.findOneByNameOrThrow(req.params.name)
+    .then( category => {
     res.render('category', { category });
   })
   .catch(next);
 });
+
 
 app.get('/', (req, res, next)=> {
   res.render('index', {});
